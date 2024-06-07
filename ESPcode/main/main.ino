@@ -7,6 +7,9 @@
 #define SS_PIN 5
 #define RST_PIN 22
 
+#define LED 33
+#define STATUS 2
+
 MFRC522 rfid(SS_PIN, RST_PIN);
 
 char card[22];
@@ -18,6 +21,9 @@ void setup()
 {
   Serial.begin(115200);
 
+  pinMode(LED,OUTPUT);
+  pinMode(STATUS, OUTPUT);
+
   Serial.println("Connecting to WiFi...");
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED)
@@ -25,6 +31,7 @@ void setup()
     delay(1000);
     Serial.print(".");
   }
+  digitalWrite(STATUS, HIGH);
   Serial.println("Connected to WiFi");
   Serial.println("IP: ");
   Serial.print(WiFi.localIP());
@@ -56,7 +63,10 @@ void sendHttpRequest(const char *url, const char *uid, const char *rollno)
 
     if (httpCode == HTTP_CODE_OK)
     {
+      digitalWrite(LED, HIGH);
+      delay(10);
       Serial.println("HTTP request sent successfully");
+      digitalWrite(LED, LOW);
     }
     else
     {
