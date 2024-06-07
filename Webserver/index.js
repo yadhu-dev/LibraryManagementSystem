@@ -1,10 +1,5 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const app = express();
-const path = require("path");
-
-app.use(bodyParser.json());
-const FilePath = path.join("D:", "--PROJECTS2024--", "LumosAI_", "index.html");
 
 app.get("/", function (req, res) {
   res.send("GET request to homepage");
@@ -20,6 +15,7 @@ app.post("/api/endpoint", function (req, res) {
   const { uid, rollno } = req.body;
   console.log("UID:", uid);
   console.log("RollNo:", rollno);
+  console.log("");
 
   // Send a response back to the board
   res.send("Data received successfully");
