@@ -133,7 +133,7 @@ void loop()
       sprintf(&card[i * 3], "%02X ", rfid.uid.uidByte[i]);
     }
 
-    card[rfid.uid.size * 3 - 1] = '\0';0
+    card[rfid.uid.size * 3 - 1] = '\0';
 
     // Print the card array for verification
     Serial.print("Card UID: ");
