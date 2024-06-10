@@ -30,8 +30,8 @@ mycursor.execute("SHOW COLUMNS FROM details")
 print(mycursor.fetchall())
 
 #taking values 
-uid = read_rfid
-no = int(input("Enter no (integer): "))
+uid = read_rfid()
+no = input("Enter no (integer): ")
 para = (uid, no)
 
 #sql query for inserting data in table
