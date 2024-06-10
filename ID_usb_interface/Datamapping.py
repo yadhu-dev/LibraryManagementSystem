@@ -1,17 +1,25 @@
 import mysql.connector
 import serial
+import time
 
 
 
-# Function to read RFID tag
+
 def read_rfid(ser):
+    flag = {"ets Jul 29 2019 12:21:46", "rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)", 
+            "configsip: 0, SPIWP:0xee", "clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00", 
+            "mode:DIO, clock div:1", "load:0x3fff0030,len:1184", "load:0x40078000,len:13260", 
+            "load:0x40080400,len:3028", "entry 0x400805e4"}
+
     while True:
         print("Place your RFID tag near the reader...")
         if ser.in_waiting > 0:
             rfid_tag = ser.readline().strip().decode('utf-8')  # Read and decode the RFID tag
-        if rfid_tag:
-            print("Scanned successfully")
-            return rfid_tag.strip()
+            if any(flag_str in rfid_tag for flag_str in flag):
+                continue
+            else:
+                print("\nRead Successfully")
+                return rfid_tag.strip()
        
 
 
@@ -28,18 +36,6 @@ mydb = mysql.connector.connect(
   database ="lms"
 )
 mycursor = mydb.cursor()
-
-# #Show all Tables
-# mycursor.execute("SHOW TABLES")
-# print("\nTable name in database lms")
-# for x in mycursor:
-#     print(x)
-
-# # Show column names in table details
-# print("\nColumn names in table details are")
-# mycursor.execute("SHOW COLUMNS FROM details")
-# for column in mycursor.fetchall():
-#     print(column)
 
 #taking values 
 try:
@@ -61,12 +57,6 @@ try:
             except mysql.connector.Error as err:
                 print(f"Error: {err}")
 
-            # # SQL query for selecting data from table
-            # mycursor.execute("SELECT * FROM details")
-            # print("\nRows in 'details' table:")
-            # for row in mycursor.fetchall():
-            #     print(row)
-            
             # Prompt the user to continue or end the program
             continue_prompt = input("Do you want to scan another card? (y/n): ").strip().lower()
             if continue_prompt == 'n':
