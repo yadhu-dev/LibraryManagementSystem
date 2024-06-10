@@ -1,6 +1,6 @@
 import mysql.connector
 import serial
-
+import time
 
 
 # Function to read RFID tag
