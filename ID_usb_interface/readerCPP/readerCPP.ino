@@ -13,7 +13,6 @@ void setup() {
     Serial.begin(115200);
     SPI.begin();
     rfid.PCD_Init();
-    Serial.println("\nTap RFID/NFC Tag on reader");
 
 }
 
