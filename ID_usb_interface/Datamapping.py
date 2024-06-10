@@ -1,7 +1,7 @@
 import mysql.connector
 import serial
 
-ser = serial.Serial('COM5', 115200, timeout=1)
+ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 
 # Function to read RFID tag
 def read_rfid():
