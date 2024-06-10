@@ -15,13 +15,15 @@ def find_serial_port():
             continue
     return None
 
-
 # Function to read RFID tag
-def read_rfid():
-    print("Place your RFID tag near the reader...")
-    rfid_tag = ser.readline().strip().decode('utf-8')  # Read and decode the RFID tag
-    return rfid_tag.strip()
-
+def read_rfid(ser):
+    while True:
+        print("Place your RFID tag near the reader...")
+        rfid_tag = ser.readline().strip().decode('utf-8')  # Read and decode the RFID tag
+        if rfid_tag:
+            print("Scanned successfully")
+            return rfid_tag.strip()
+       
 
 # Find the correct serial port
 port = find_serial_port()
@@ -51,25 +53,45 @@ for x in mycursor:
 # Show column names in table details
 print("\nColumn names in table details are")
 mycursor.execute("SHOW COLUMNS FROM details")
-print(mycursor.fetchall())
+for column in mycursor.fetchall():
+    print(column)
 
 #taking values 
-uid = read_rfid()
-no = input("Enter no (integer): ")
-para = (uid, no)
+try:
+    while True:
+        # Read RFID
+        uid = read_rfid(ser)
+        if uid:
+            # Once a valid UID is read, prompt for additional input
+            no = input("Enter no (integer): ")
+            para = (uid, no)
 
-#sql query for inserting data in table
-sqlinput = "INSERT INTO details (uid, no) VALUES (%s, %s)"
-#inserting data
-mycursor.execute(sqlinput, para)
-mydb.commit()
+            # SQL query for inserting data into table
+            sqlinput = "INSERT INTO details (uid, no) VALUES (%s, %s)"
+            try:
+                # Inserting data
+                mycursor.execute(sqlinput, para)
+                mydb.commit()
+                print(f"{mycursor.rowcount} record(s) inserted.")
+            except mysql.connector.Error as err:
+                print(f"Error: {err}")
 
-#sql query for selecting data from table
-mycursor.execute("SELECT * FROM details")
-print("\nRows in 'details' table:")
-for row in mycursor.fetchall():
-    print(row)
-
-
-mycursor.close()
-mydb.close()
+            # SQL query for selecting data from table
+            mycursor.execute("SELECT * FROM details")
+            print("\nRows in 'details' table:")
+            for row in mycursor.fetchall():
+                print(row)
+            
+            # Prompt the user to continue or end the program
+            continue_prompt = input("Do you want to scan another card? (y/n): ").strip().lower()
+            if continue_prompt == 'n':
+                print("Ending the program.")
+                break
+            # Adding a small delay to avoid rapid continuous polling
+            time.sleep(1)
+finally:
+    # Close cursor and connection
+    mycursor.close()
+    mydb.close()
+    # Close the serial port
+    ser.close()
