@@ -1,6 +1,6 @@
 import mysql.connector
 import serial
-
+import time
 
 
 def read_rfid(ser):
