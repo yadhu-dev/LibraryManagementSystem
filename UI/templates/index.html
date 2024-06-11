@@ -161,6 +161,16 @@
 
           const jsonResponse = await response.json();
           console.log(JSON.stringify(jsonResponse));
+
+          if (jsonResponse.status){
+            if (jsonResponse.status == "success") {
+              alert("RollNo has been added")
+            }
+            else {
+              alert("RollNo already mapped") 
+            }
+          }
+
           document.getElementById("getrollno").value = ""
         } catch (error) {
           console.error(error);
