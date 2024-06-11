@@ -1,5 +1,5 @@
 import mysql.connector
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 import serial
 import time
 import threading
@@ -114,9 +114,6 @@ def get_uid():
     else:
         return jsonify({'uid': ''})
 
-#
-    
-
 #############################################################
 ######## CLOSE END POINT FOR AUTOMATICALLY FETCHING UID######
 #############################################################
@@ -124,6 +121,19 @@ def get_uid():
 
 ############################################################
 ######## PUSHING THE DATA TO THE DATABASE ##################
+############################################################
+
+@app.route('/postdata', methods=['POST'])
+def postdata():
+    data = request.get_json()
+    rollno = data.get('roll', '')
+    uid = data.get('id', '')
+    print(f"Received rollno: {rollno}\nReceived UID: {uid}")
+    
+    return jsonify({'status': 'success', 'received_rollno': rollno, 'received_uid':uid})
+
+############################################################
+######## CLOSE PUSHING THE DATA TO THE DATABASE ############
 ############################################################
 
 if __name__ == '__main__':

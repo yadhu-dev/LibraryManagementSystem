@@ -160,11 +160,27 @@
 
         setInterval(fetchUID, 500);
       });
-
+      
+      // Function to send the user typed rollno to the flask server
       async function postData() {
         try {
-          rollno = document.getElementById("getrollno").value;
-          
+
+          let roll = document.getElementById("getrollno").value;
+          let id = document.getElementById("getuid").value;
+
+          const response = await fetch("http://127.0.0.1:5000/postdata", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ rollno: roll }, {uid: id}),
+          });
+          const jsonResponse = await response.json();
+          console.log(JSON.stringify(jsonResponse));
+
+        } catch (error) {
+          console.error(error);
         }
       }
     </script>
