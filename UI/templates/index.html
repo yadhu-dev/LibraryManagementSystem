@@ -7,22 +7,81 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-      body{
+      body {
         background-color: bisque;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .main {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .container {
+        margin-bottom: 20px;
+      }
+      .container h3 {
+        margin: 0;
+        margin-bottom: 5px;
+      }
+      .container input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .container input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .scriptcont {
+        display: flex;
+        justify-content: space-between;
+      }
+      .scriptcont div {
+        flex: 1;
+        margin: 0 10px;
+      }
+      .scriptcont h3 {
+        margin-top: 0;
+      }
+      .scriptcont button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .scriptcont button:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
       }
     </style>
   </head>
   <body>
     <div class="main">
       <div class="container">
-        <form>
+        <form id="data-form">
           <div class="uid">
             <h3>UID</h3>
-            <input type="text" name="uid" />
+            <input type="text" name="uid" required />
           </div>
           <div class="data">
             <h3>Data</h3>
-            <input type="text" name="data" />
+            <input type="text" name="data" required />
           </div>
           <div class="submit">
             <input type="submit" value="Submit" />
@@ -33,15 +92,60 @@
         <div class="map">
           <h3>Map</h3>
           <button id="start-map">Start</button>
-          <button id="stop-map">Stop</button>
+          <button id="stop-map" disabled>Stop</button>
         </div>
         <div class="write">
           <h3>Write</h3>
           <button id="start-write">Start</button>
-          <button id="stop-write">Stop</button>
+          <button id="stop-write" disabled>Stop</button>
         </div>
       </div>
     </div>
-    <script src="" async defer></script> <!-- Script tag for future JavaScript -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const startMapBtn = document.getElementById('start-map');
+        const stopMapBtn = document.getElementById('stop-map');
+        const startWriteBtn = document.getElementById('start-write');
+        const stopWriteBtn = document.getElementById('stop-write');
+
+        startMapBtn.addEventListener('click', function () {
+          console.log('Map started');
+          startMapBtn.disabled = true;
+          stopMapBtn.disabled = false;
+          // Add your start map functionality here
+        });
+
+        stopMapBtn.addEventListener('click', function () {
+          console.log('Map stopped');
+          startMapBtn.disabled = false;
+          stopMapBtn.disabled = true;
+          // Add your stop map functionality here
+        });
+
+        startWriteBtn.addEventListener('click', function () {
+          console.log('Write started');
+          startWriteBtn.disabled = true;
+          stopWriteBtn.disabled = false;
+          // Add your start write functionality here
+        });
+
+        stopWriteBtn.addEventListener('click', function () {
+          console.log('Write stopped');
+          startWriteBtn.disabled = false;
+          stopWriteBtn.disabled = true;
+          // Add your stop write functionality here
+        });
+
+        const form = document.getElementById('data-form');
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const formData = new FormData(form);
+          const uid = formData.get('uid');
+          const data = formData.get('data');
+          console.log(`UID: ${uid}, Data: ${data}`);
+          // Add your form submission functionality here
+        });
+      });
+    </script>
   </body>
 </html>
