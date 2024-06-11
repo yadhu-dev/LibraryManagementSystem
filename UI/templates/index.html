@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       body {
-        background-color: bisque;
+        background-color: rgb(0, 0, 0);
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
@@ -20,8 +20,9 @@
       .main {
         background: white;
         padding: 20px;
-        border-radius: 8px;
+        border-radius: 30px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 600px; /* Increased width for a wider container */
       }
       .container {
         margin-bottom: 20px;
@@ -89,13 +90,8 @@
         </form>
       </div>
       <div class="scriptcont">
-        <div class="map">
-          <h3>Map</h3>
-          <button id="start-map">Start</button>
-          <button id="stop-map" disabled>Stop</button>
-        </div>
         <div class="write">
-          <h3>Write</h3>
+          <h3>Keystroke Mode</h3>
           <button id="start-write">Start</button>
           <button id="stop-write" disabled>Stop</button>
         </div>
@@ -103,24 +99,8 @@
     </div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const startMapBtn = document.getElementById("start-map");
-        const stopMapBtn = document.getElementById("stop-map");
         const startWriteBtn = document.getElementById("start-write");
         const stopWriteBtn = document.getElementById("stop-write");
-
-        startMapBtn.addEventListener("click", function () {
-          console.log("Map started");
-          startMapBtn.disabled = true;
-          stopMapBtn.disabled = false;
-          // Add your start map functionality here
-        });
-
-        stopMapBtn.addEventListener("click", function () {
-          console.log("Map stopped");
-          startMapBtn.disabled = false;
-          stopMapBtn.disabled = true;
-          // Add your stop map functionality here
-        });
 
         startWriteBtn.addEventListener("click", function () {
           console.log("Write started");
