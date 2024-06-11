@@ -42,7 +42,7 @@ try:
         uid = read_rfid(ser)
         if uid:
             # Once a valid UID is read, prompt for additional input
-            no = input("Enter no (integer): ")
+            no = input("Enter data: ")
             para = (uid, no)
 
             # SQL query for inserting data into table
