@@ -102,50 +102,71 @@
       </div>
     </div>
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const startMapBtn = document.getElementById('start-map');
-        const stopMapBtn = document.getElementById('stop-map');
-        const startWriteBtn = document.getElementById('start-write');
-        const stopWriteBtn = document.getElementById('stop-write');
+      document.addEventListener("DOMContentLoaded", function () {
+        const startMapBtn = document.getElementById("start-map");
+        const stopMapBtn = document.getElementById("stop-map");
+        const startWriteBtn = document.getElementById("start-write");
+        const stopWriteBtn = document.getElementById("stop-write");
 
-        startMapBtn.addEventListener('click', function () {
-          console.log('Map started');
+        startMapBtn.addEventListener("click", function () {
+          console.log("Map started");
           startMapBtn.disabled = true;
           stopMapBtn.disabled = false;
           // Add your start map functionality here
         });
 
-        stopMapBtn.addEventListener('click', function () {
-          console.log('Map stopped');
+        stopMapBtn.addEventListener("click", function () {
+          console.log("Map stopped");
           startMapBtn.disabled = false;
           stopMapBtn.disabled = true;
           // Add your stop map functionality here
         });
 
-        startWriteBtn.addEventListener('click', function () {
-          console.log('Write started');
+        startWriteBtn.addEventListener("click", function () {
+          console.log("Write started");
           startWriteBtn.disabled = true;
           stopWriteBtn.disabled = false;
           // Add your start write functionality here
         });
 
-        stopWriteBtn.addEventListener('click', function () {
-          console.log('Write stopped');
+        stopWriteBtn.addEventListener("click", function () {
+          console.log("Write stopped");
           startWriteBtn.disabled = false;
           stopWriteBtn.disabled = true;
           // Add your stop write functionality here
         });
 
-        const form = document.getElementById('data-form');
-        form.addEventListener('submit', function (event) {
+        const form = document.getElementById("data-form");
+        form.addEventListener("submit", function (event) {
           event.preventDefault();
           const formData = new FormData(form);
-          const uid = formData.get('uid');
-          const data = formData.get('data');
+          const uid = formData.get("uid");
+          const data = formData.get("data");
           console.log(`UID: ${uid}, Data: ${data}`);
-          // Add your form submission functionality here
         });
+
+        // Function to fetch UID
+        async function fetchUID() {
+          try {
+            const response = await fetch("/get_uid");
+            const result = await response.json();
+            if (result.uid) {
+              document.getElementById("getuid").value = result.uid;
+            }
+          } catch (error) {
+            console.error("Error fetching UID:", error);
+          }
+        }
+
+        setInterval(fetchUID, 500);
       });
+
+      async function postData() {
+        try {
+          rollno = document.getElementById("getrollno").value;
+          
+        }
+      }
     </script>
   </body>
 </html>

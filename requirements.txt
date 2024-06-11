@@ -1,3 +1,5 @@
 pyserial
 pyautogui
 flask
+mysql
+mysql-connector-python
