@@ -36,6 +36,7 @@ try:
 
                 # Typing the roll number to the focused textbox
                 pyautogui.typewrite(roll_number)
+                pyautogui.press('enter')
             else:
                 print("UID not found in the database.")
 except Exception as e:
