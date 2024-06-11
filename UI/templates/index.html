@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <div class="heading">
-            <h1>Test Website</h1>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Form and Script Controls</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body{
+        background-color: bisque;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="container">
+        <form>
+          <div class="uid">
+            <h3>UID</h3>
+            <input type="text" name="uid" />
+          </div>
+          <div class="data">
+            <h3>Data</h3>
+            <input type="text" name="data" />
+          </div>
+          <div class="submit">
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+      <div class="scriptcont">
+        <div class="map">
+          <h3>Map</h3>
+          <button id="start-map">Start</button>
+          <button id="stop-map">Stop</button>
         </div>
-        <div class="dashboard">
-            <a href="">Home</a>
-            <a href="">Add</a>
-            <a href="">Edit</a>
-            <a href="">Remove</a>
+        <div class="write">
+          <h3>Write</h3>
+          <button id="start-write">Start</button>
+          <button id="stop-write">Stop</button>
         </div>
-        <script src="" async defer></script>
-    </body>
+      </div>
+    </div>
+    <script src="" async defer></script> <!-- Script tag for future JavaScript -->
+  </body>
 </html>
