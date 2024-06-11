@@ -1,4 +1,5 @@
 import mysql.connector
+import mysql
 from flask import Flask, render_template, jsonify, request
 import serial
 import time
@@ -126,11 +127,22 @@ def get_uid():
 @app.route('/postdata', methods=['POST'])
 def postdata():
     data = request.get_json()
-    rollno = data.get('roll', '')
-    uid = data.get('id', '')
+    rollno = data.get('rollno', '')
+    uid = data.get('uid', '')
     print(f"Received rollno: {rollno}\nReceived UID: {uid}")
+
+    try:
+        para = (uid, rollno)
+        query = "INSERT INTO details (uid, no) VALUES (%s, %s)"
+
+        mycursor.execute(query, para)
+        mydb.commit()
+        print(f"{mycursor.rowcount} record(s) inserted.")
+        return jsonify({'status': 'success', 'received_rollno': rollno, 'received_uid':uid})
     
-    return jsonify({'status': 'success', 'received_rollno': rollno, 'received_uid':uid})
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        return jsonify({'status': 'failed', 'received_rollno': rollno, 'received_uid':uid})
 
 ############################################################
 ######## CLOSE PUSHING THE DATA TO THE DATABASE ############
