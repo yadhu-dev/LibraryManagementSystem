@@ -7,6 +7,7 @@ import threading
 import pyautogui
 
 app = Flask(__name__)
+stop_event = threading.Event()
 
 
 ############################################################
@@ -100,15 +101,15 @@ def query_database(uid, cursor):
     cursor.execute("SELECT no FROM details WHERE uid = %s", (uid,))
     return cursor.fetchone()
 
-def search_rfid(uid):
+def search_rfid():
     try:
-        while True:
+        while not stop_event.is_set():
             if ser.in_waiting > 0:
-                uid = ser.readline().decode('utf-8').strip()
+                uid = ser.readline().decode('utf-8').strip() # Formatting the UID
                 print(f'Received UID : {uid}')
-                result = query_database(uid, cursor)
+                result = query_database(uid, cursor) # Query function call
                 if result:
-                    roll_number = str(result[0])
+                    roll_number = str(result[0]) # Assuming UID is the only result in a new line
                     print(f"Roll No: {roll_number}")
                     time.sleep(0.5)
 
@@ -118,6 +119,8 @@ def search_rfid(uid):
                     print("UID not found in the database")
     except Exception as e:
         print(f"Error: {e}")
+
+search_thread = threading.Thread(target=search_rfid) # Thread to handle keystrokes in the background
 
 ############################################################
 ######## END FUNCTION FOR AUTOMATICALLY FETCHING UID########
@@ -154,14 +157,14 @@ def get_uid():
 
 @app.route('/postdata', methods=['POST'])
 def postdata():
-    data = request.get_json()
+    data = request.get_json() # Receive data from the card and the user
     rollno = data.get('rollno', '')
     uid = data.get('uid', '')
     print(f"Received rollno: {rollno}\nReceived UID: {uid}")
 
     try:
         para = (uid, rollno)
-        query = "INSERT INTO details (uid, no) VALUES (%s, %s)"
+        query = "INSERT INTO details (uid, no) VALUES (%s, %s)" # Query for data insertion
 
         mycursor.execute(query, para)
         mydb.commit()
@@ -178,14 +181,23 @@ def postdata():
 
 @app.route('/fetchData')
 def fetchData():
-    search_thread = threading.Thread(target=search_rfid)
     if not search_thread.is_alive():
+        stop_event.clear()  # Clear the event in case it was previously set
+        search_thread = threading.Thread(target=search_rfid)
         search_thread.daemon = True
         search_thread.start()
         return jsonify({'status': 'success'})
     else:
         return jsonify({'status': 'running'})
     
+@app.route('/endFetch')
+def endFetch():
+    if search_thread.is_alive():
+        stop_event.set()  # Signal the thread to stop
+        search_thread.join()  # Wait for the thread to actually stop
+        return jsonify({'status': 'stopped'})
+    else:
+        return jsonify({'status': 'not running'})
 
 if __name__ == '__main__':
     app.run()
