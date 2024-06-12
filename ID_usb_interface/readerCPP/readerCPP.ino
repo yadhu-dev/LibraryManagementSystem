@@ -22,6 +22,10 @@ void setup() {
     SPI.begin();
     rfid.PCD_Init();
     digitalWrite(STATUS, HIGH);
+
+    // Initialize LEDC peripheral for the buzzer
+    ledcSetup(0, 5000, 8); // Channel 0, 5 kHz frequency, 8-bit resolution
+    ledcAttachPin(BUZZER, 0); // Attach channel 0 to the buzzer pin
 }
 
 void loop()
@@ -46,10 +50,12 @@ void loop()
 
     // Buzzer and LED indicators
     digitalWrite(INDICATOR, HIGH);
-    tone(BUZZER, 698, 50);
+    // Start the tone using LEDC
+    ledcWriteTone(0, 698); // Channel 0, frequency 698 Hz
     delay(50);
     digitalWrite(INDICATOR, LOW);
-    noTone(BUZZER);
+    // Stop the tone
+    ledcWriteTone(0, 0);
 
     // Halt PICC and stop encryption on PCD
     rfid.PICC_HaltA();
