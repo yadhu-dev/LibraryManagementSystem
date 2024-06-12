@@ -3,6 +3,9 @@
 
 #define SS_PIN 5
 #define RST_PIN 22
+#define INDICATOR 13
+#define BUZZER 12
+#define STATUS 2
 
 char card[22];
 
@@ -11,9 +14,14 @@ MFRC522 rfid(SS_PIN, RST_PIN);
 void setup() {
 
     Serial.begin(115200);
+
+    pinMode(INDICATOR, OUTPUT);
+    pinMode(STATUS, OUTPUT);
+    pinMode(BUZZER, OUTPUT);
+
     SPI.begin();
     rfid.PCD_Init();
-
+    digitalWrite(STATUS, HIGH);
 }
 
 void loop()
@@ -35,6 +43,13 @@ void loop()
 
     // Print the card array for verification
     Serial.println(card);
+
+    // Buzzer and LED indicators
+    digitalWrite(INDICATOR, HIGH);
+    tone(BUZZER, 698, 50);
+    delay(50);
+    digitalWrite(INDICATOR, LOW);
+    noTone(BUZZER);
 
     // Halt PICC and stop encryption on PCD
     rfid.PICC_HaltA();
