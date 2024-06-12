@@ -4,6 +4,7 @@ from flask import Flask, render_template, jsonify, request
 import serial
 import time
 import threading
+import pyautogui
 
 app = Flask(__name__)
 
@@ -91,6 +92,33 @@ if ser is not None:
     thread.daemon = True
     thread.start()
 
+# Search rfid in the database (iterative function)
+cursor = mydb.cursor()
+
+# Function for passing the query
+def query_database(uid, cursor):
+    cursor.execute("SELECT no FROM details WHERE uid = %s", (uid,))
+    return cursor.fetchone()
+
+def search_rfid(uid):
+    try:
+        while True:
+            if ser.in_waiting > 0:
+                uid = ser.readline().decode('utf-8').strip()
+                print(f'Received UID : {uid}')
+                result = query_database(uid, cursor)
+                if result:
+                    roll_number = str(result[0])
+                    print(f"Roll No: {roll_number}")
+                    time.sleep(0.5)
+
+                    pyautogui.typewrite(roll_number)
+                    pyautogui.press('enter')
+                else:
+                    print("UID not found in the database")
+    except Exception as e:
+        print(f"Error: {e}")
+
 ############################################################
 ######## END FUNCTION FOR AUTOMATICALLY FETCHING UID########
 ############################################################
@@ -147,6 +175,17 @@ def postdata():
 ############################################################
 ######## CLOSE PUSHING THE DATA TO THE DATABASE ############
 ############################################################
+
+@app.route('/fetchData')
+def fetchData():
+    search_thread = threading.Thread(target=search_rfid)
+    if not search_thread.is_alive():
+        search_thread.daemon = True
+        search_thread.start()
+        return jsonify({'status': 'success'})
+    else:
+        return jsonify({'status': 'running'})
+    
 
 if __name__ == '__main__':
     app.run()
