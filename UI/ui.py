@@ -79,6 +79,7 @@ def read_rfid():
 
     while True:
         if ser.in_waiting > 0:
+            time.sleep(1)
             rfid_tag = ser.readline().strip().decode('utf-8')  # Read and decode the RFID tag
             if any(flag_str in rfid_tag for flag_str in flag):
                 continue
@@ -207,11 +208,34 @@ def keystrokeData():
     data = request.get_json()
     uid = data.get('uid', '')
     counter = data.get('ctr', '')
-    print(f"Searching for {uid}")
 
     try:
-        keystrokeEntry(uid, counter)
-        return jsonify({'status': 'success'})
+        while counter == 1:
+            # If data found in serial
+            if ser.in_waiting > 0:
+                uid = ser.readline().decode('utf-8').strip()
+                print(f"Received UID: {uid}")
+                # Calling the query function to get roll numbers with the associated UID
+                result = query_database(uid, cursor)
+                if result:
+                    roll_number = str(result[0])  # Ensure the roll number is a string
+                    print(f"Roll number: {roll_number}")
+
+                    time.sleep(0.5)
+
+                    # Typing the roll number to the focused textbox
+                    pyautogui.typewrite(roll_number)
+                    pyautogui.press('enter')
+                    if counter == 1:
+                        keystrokeData()
+                    else:
+                        return
+                else:
+                    print("UID not found in the database.") 
+                    if counter == 1:
+                        keystrokeData()
+                    else:
+                        return
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({'status': 'failed'})
