@@ -176,6 +176,40 @@
           console.error(error);
         }
       }
+
+      // Function to send data for search and keystroke function
+      async function keystrokeData() {
+        try {
+
+          const id = document.getElementById("getuid").value
+
+          console.log("UID sent (keystrokeData): "+ id)
+
+          const response = await fetch("http://127.0.0.1:5000/fetchData", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ uid: id }),
+          });
+
+          const jsonResponse = await response.json();
+          console.log(JSON.stringify(jsonResponse));
+
+          if (jsonResponse.status){
+            if (jsonResponse.status == "success") {
+              console.log("Keystroke entered")
+            }
+            else {
+              console.log("Keystroke entry failed")
+            }
+          }
+
+        } catch (error) {
+          console.error(error);
+        }
+      }
     </script>
   </body>
 </html>
