@@ -19,7 +19,9 @@ except serial.SerialException as e:
     print(f"Failed to connect to serial port: {e}")
 
 # Global variable to store the last read UID
-last_uid = None
+last_uid = ""
+read_active = True
+write_active = False
 
 # DB creds and initialization
 mydb = mysql.connector.connect(
@@ -49,12 +51,6 @@ def insertdata(uid, rollno):
                     print(f"{mycursor.rowcount} record(s) inserted.")
                 except mysql.connector.Error as err:
                     print(f"Error: {err}")
-
-                # Prompt the user to continue or end the program
-                continue_prompt = input("Do you want to scan another card? (y/n): ").strip().lower()
-                if continue_prompt == 'n':
-                    print("Ending the program.")
-                    break
                 # Adding a small delay to avoid rapid continuous polling
                 time.sleep(1)
     finally:
@@ -77,9 +73,8 @@ def read_rfid():
         "load:0x40080400,len:3028", "entry 0x400805e4"
     }
 
-    while True:
+    while read_active:
         if ser.in_waiting > 0:
-            time.sleep(1)
             rfid_tag = ser.readline().strip().decode('utf-8')  # Read and decode the RFID tag
             if any(flag_str in rfid_tag for flag_str in flag):
                 continue
@@ -108,39 +103,6 @@ def query_database(uid, cursor):
     cursor.execute("SELECT no FROM details WHERE uid = %s", (uid,))
     return cursor.fetchone()
 
-def keystrokeEntry(uid, counter):
-    global last_uid
-    try:
-        while counter == 1:
-        # If data found in serial
-            if ser.in_waiting > 0:
-                print(f"Received UID: {last_uid}")
-                # Calling the query function to get roll numbers with the associated UID
-                result = query_database(last_uid, cursor)
-                if result:
-                    roll_number = str(result[0])  # Ensure the roll number is a string
-                    print(f"Roll number: {roll_number}")
-
-                    time.sleep(0.5)
-
-                    # Typing the roll number to the focused textbox
-                    pyautogui.typewrite(roll_number)
-                    pyautogui.press('enter')
-                else:
-                    print("UID not found in the database.")
-    except Exception as e:
-        print(f"Error: {e}")
-    finally:
-        # Close cursor and connection22BCAE34
-        cursor.close()
-        mydb.close()
-        # Close the serial port
-        ser.close()
-
-if ser is not None:
-    searchThread = threading.Thread(target=keystrokeEntry)
-    searchThread.daemon = True
-    searchThread.start()
 
 ############################################################
 ######## SEARCH AND KEYSTROKE ENTRY FUNCTION END ###########
@@ -205,40 +167,64 @@ def postdata():
 
 @app.route('/keystrokeData', methods=['POST'])
 def keystrokeData():
+    global read_active
+    global write_active
+
     data = request.get_json()
-    uid = data.get('uid', '')
     counter = data.get('ctr', '')
 
+    if counter == 0:
+        read_active = True
+        write_active = False
+
+        print("Write Stopped")
+        print(f"write_active: {write_active}, read_active: {read_active}")
+
+        thread = threading.Thread(target=read_rfid)
+        thread.daemon = True
+        thread.start()
+
+        return jsonify({'status': 'stopped'})
+    else:
+        read_active = False
+        write_active = True
+
+    print(f"Counter: {counter}")
+
     try:
-        while counter == 1:
-            # If data found in serial
+        while write_active:
             if ser.in_waiting > 0:
                 uid = ser.readline().decode('utf-8').strip()
                 print(f"Received UID: {uid}")
-                # Calling the query function to get roll numbers with the associated UID
+                
                 result = query_database(uid, cursor)
                 if result:
-                    roll_number = str(result[0])  # Ensure the roll number is a string
+                    roll_number = str(result[0])
                     print(f"Roll number: {roll_number}")
 
                     time.sleep(0.5)
 
-                    # Typing the roll number to the focused textbox
                     pyautogui.typewrite(roll_number)
                     pyautogui.press('enter')
                     if counter == 1:
-                        keystrokeData()
+                        return keystrokeData()
                     else:
-                        return
+                        write_active = False
+                        return jsonify({'status': 'stopped'})
                 else:
-                    print("UID not found in the database.") 
+                    print("UID not found in the database.")
                     if counter == 1:
-                        keystrokeData()
+                        return keystrokeData()
                     else:
-                        return
+                        write_active = False
+                        return jsonify({'status': 'stopped'})
+        
+        return jsonify({'status': 'stopped'})
+
     except Exception as e:
         print(f"Error: {e}")
-        return jsonify({'status': 'failed'})
+        write_active = False
+        return jsonify({'status': 'failed', 'error': str(e)})
 
 ############################################################
 ######## START SEARCH AND KEYSTROKE FUNCTION ###############

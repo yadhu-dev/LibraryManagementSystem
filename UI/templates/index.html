@@ -92,8 +92,8 @@
       <div class="scriptcont">
         <div class="write">
           <h3>Keystroke Mode</h3>
-          <button id="start-write" onclick="keystrokeData()">Start</button>
-          <button id="stop-write" disabled>Stop</button>
+          <button id="start-write" onclick="keystrokeData(1)">Start</button>
+          <button id="stop-write" disabled onclick="keystrokeData(0)">Stop</button>
         </div>
       </div>
     </div>
@@ -178,13 +178,8 @@
       }
 
       // Function to send data for search and keystroke function
-      async function keystrokeData() {
+      async function keystrokeData(counter) {
         try {
-
-          const id = document.getElementById("getuid").value
-
-          let counter = 1
-          console.log("UID sent (keystrokeData): "+ id)
 
           const response = await fetch("http://127.0.0.1:5000/keystrokeData", {
             method: "POST",
@@ -192,7 +187,7 @@
               Accept: "application/json",
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ uid: id , ctr: counter}),
+            body: JSON.stringify({ ctr: counter }),
           });
 
           const jsonResponse = await response.json();
