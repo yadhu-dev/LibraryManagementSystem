@@ -92,7 +92,7 @@
       <div class="scriptcont">
         <div class="write">
           <h3>Keystroke Mode</h3>
-          <button id="start-write">Start</button>
+          <button id="start-write" onclick="keystrokeData()">Start</button>
           <button id="stop-write" disabled>Stop</button>
         </div>
       </div>
@@ -183,15 +183,16 @@
 
           const id = document.getElementById("getuid").value
 
+          let counter = 1
           console.log("UID sent (keystrokeData): "+ id)
 
-          const response = await fetch("http://127.0.0.1:5000/fetchData", {
+          const response = await fetch("http://127.0.0.1:5000/keystrokeData", {
             method: "POST",
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ uid: id }),
+            body: JSON.stringify({ uid: id , ctr: counter}),
           });
 
           const jsonResponse = await response.json();
@@ -202,7 +203,7 @@
               console.log("Keystroke entered")
             }
             else {
-              console.log("Keystroke entry failed")
+              console.log("Keystroke entry failed/User not found")
             }
           }
 

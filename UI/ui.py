@@ -4,6 +4,7 @@ from flask import Flask, render_template, jsonify, request
 import serial
 import time
 import threading
+import pyautogui
 
 app = Flask(__name__)
 
@@ -95,6 +96,55 @@ if ser is not None:
 ######## END FUNCTION FOR AUTOMATICALLY FETCHING UID########
 ############################################################
 
+############################################################
+######## SEARCH AND KEYSTROKE ENTRY FUNCTION ###############
+############################################################
+
+cursor = mydb.cursor()
+
+# Function for passing the query
+def query_database(uid, cursor):
+    cursor.execute("SELECT no FROM details WHERE uid = %s", (uid,))
+    return cursor.fetchone()
+
+def keystrokeEntry(uid, counter):
+    global last_uid
+    try:
+        while counter == 1:
+        # If data found in serial
+            if ser.in_waiting > 0:
+                print(f"Received UID: {last_uid}")
+                # Calling the query function to get roll numbers with the associated UID
+                result = query_database(last_uid, cursor)
+                if result:
+                    roll_number = str(result[0])  # Ensure the roll number is a string
+                    print(f"Roll number: {roll_number}")
+
+                    time.sleep(0.5)
+
+                    # Typing the roll number to the focused textbox
+                    pyautogui.typewrite(roll_number)
+                    pyautogui.press('enter')
+                else:
+                    print("UID not found in the database.")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        # Close cursor and connection22BCAE34
+        cursor.close()
+        mydb.close()
+        # Close the serial port
+        ser.close()
+
+if ser is not None:
+    searchThread = threading.Thread(target=keystrokeEntry)
+    searchThread.daemon = True
+    searchThread.start()
+
+############################################################
+######## SEARCH AND KEYSTROKE ENTRY FUNCTION END ###########
+############################################################
+
 # HOMEPAGE
 
 @app.route('/')
@@ -148,5 +198,28 @@ def postdata():
 ######## CLOSE PUSHING THE DATA TO THE DATABASE ############
 ############################################################
 
+############################################################
+######## START SEARCH AND KEYSTROKE FUNCTION ###############
+############################################################
+
+@app.route('/keystrokeData', methods=['POST'])
+def keystrokeData():
+    data = request.get_json()
+    uid = data.get('uid', '')
+    counter = data.get('ctr', '')
+    print(f"Searching for {uid}")
+
+    try:
+        keystrokeEntry(uid, counter)
+        return jsonify({'status': 'success'})
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'status': 'failed'})
+
+############################################################
+######## START SEARCH AND KEYSTROKE FUNCTION ###############
+############################################################
+
 if __name__ == '__main__':
     app.run()
+
