@@ -8,7 +8,6 @@ import pyautogui
 
 app = Flask(__name__)
 
-
 ############################################################
 ######## START FUNCTION FOR AUTOMATICALLY FETCHING UID######
 ############################################################
@@ -31,6 +30,20 @@ mydb = mysql.connector.connect(
   database ="lms"
 )
 mycursor = mydb.cursor()
+
+# Decimal to endian to standard conversion
+def comCardDecoder(decimal_number):
+    hex_string = format(decimal_number, '08x')
+
+    endian = [hex_string[i:i+2] for i in range(0, len(hex_string), 2)]
+    endian.reverse()
+    endian = ''.join(endian)
+
+    standard = [endian[i:i+2] for i in range(0, len(endian), 2)]
+    standard_format = ' '.join(standard).upper()
+
+    print(f"\nTo Standard Format: {standard_format}\n")
+    return standard_format
 
 def insertdata(uid, rollno):
     try:
@@ -231,5 +244,5 @@ def keystrokeData():
 ############################################################
 
 if __name__ == '__main__':
-    app.run()
-
+    #]app.run()
+    comCardDecoder(526168579)

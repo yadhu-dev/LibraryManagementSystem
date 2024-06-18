@@ -3,3 +3,5 @@ pyautogui
 flask
 mysql
 mysql-connector-python
+keyboard
+hid
