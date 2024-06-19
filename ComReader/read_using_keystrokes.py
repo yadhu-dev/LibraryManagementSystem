@@ -4,8 +4,10 @@ import mysql.connector
 import pyautogui
 import time
 from flask import Flask, render_template, jsonify, request
+import threading
 
 scanned_uid = ""
+hexUID = ""
 
 app = Flask(__name__)
 
@@ -94,6 +96,7 @@ def comCardDecoder(decimal_number):
 # Function to capture RFID UID
 def on_key_event(event):
     global scanned_uid
+    global hexUID
     if event.name == 'enter':
         # Process the scanned UID
         if scanned_uid:
@@ -102,6 +105,7 @@ def on_key_event(event):
 
             # Decode UID to standard format and search in database
             decoded_uid = comCardDecoder(int(UID))
+            hexUID = decoded_uid
             print(f"Scanned UID: {decoded_uid}")
 
             search_db(decoded_uid)
@@ -115,15 +119,48 @@ def on_key_event(event):
 ##################### FLASK ENDPOINTS ######################
 ############################################################
 
+# Homepage
+@app.route('/')
+def index():
+    keyboard.on_press(on_key_event)
+    return render_template('index.html')
 
+
+# UID fetch endpoint
+@app.route('/get_uid')
+def get_uid():
+    global hexUID
+    if hexUID:
+        return jsonify({'uid': hexUID})
+    else:
+        return jsonify({'uid': ''})
+    
+
+# Send UID and rollno for database storage
+@app.route('/postdata', methods=['POST'])
+def postdata():
+    data = request.get_json()
+    rollno = data.get('rollno', '')
+    uid = data.get('uid', '')
+    print(f"Received rollno: {rollno}\nReceived UID: {uid}")
+
+    try:
+        para = (uid, rollno)
+        query = "INSERT INTO details (uid, no) VALUES (%s, %s)"
+
+        mycursor.execute(query, para)
+        mydb.commit()
+        print(f"{mycursor.rowcount} record(s) inserted.")
+        return jsonify({'status': 'success', 'received_rollno': rollno, 'received_uid':uid})
+    
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        return jsonify({'status': 'failed', 'received_rollno': rollno, 'received_uid':uid})
 
 ############################################################
 #################### FLASK ENDPOINTS END ###################
 ############################################################
 
-# Hook the keyboard
-keyboard.on_press(on_key_event)
 
-# Keep the script running
-print("Listening for RFID scans...")
-keyboard.wait('esc')  # Press 'esc' to stop the script
+if __name__ == '__main__':
+    app.run()
