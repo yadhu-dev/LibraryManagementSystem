@@ -59,11 +59,17 @@ def on_key_event(event):
     if event.name == 'enter':
         # Process the scanned UID
         if scanned_uid:
-            # print(f"Scanned UID: {scanned_uid}")
-            print(f"Scanned UID: {comCardDecoder(int(scanned_uid))}")
-            search_db(comCardDecoder(int(scanned_uid)))
+            # Filter out non-digit characters
+            UID = "".join(filter(str.isdigit, scanned_uid))
+
+            # Decode UID to standard format and search in database
+            decoded_uid = comCardDecoder(int(UID))
+            print(f"Scanned UID: {decoded_uid}")
+            
+            search_db(decoded_uid)
         # Reset the scanned UID
         scanned_uid = ""
+
     else:
         scanned_uid += event.name
 
