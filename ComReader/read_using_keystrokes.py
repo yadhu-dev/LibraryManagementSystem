@@ -8,6 +8,8 @@ import threading
 
 scanned_uid = ""
 hexUID = ""
+write_active = False
+record_keystrokes = True
 
 app = Flask(__name__)
 
@@ -66,9 +68,8 @@ def search_db(uid):
 
                 time.sleep(0.5)
 
-                # Typing the roll number to the focused textbox
-                # pyautogui.typewrite(roll_number)
-                # pyautogui.press('enter')
+                return roll_number
+
         else:
             print("UID not found in the database.")
 
@@ -97,6 +98,9 @@ def comCardDecoder(decimal_number):
 def on_key_event(event):
     global scanned_uid
     global hexUID
+    global write_active
+    global record_keystrokes
+
     if event.name == 'enter':
         # Process the scanned UID
         if scanned_uid:
@@ -108,12 +112,23 @@ def on_key_event(event):
             hexUID = decoded_uid
             print(f"Scanned UID: {decoded_uid}")
 
-            search_db(decoded_uid)
+            if write_active:
+                # Typing the roll number to the focused textbox
+                pyautogui.press('up')
+                for _ in range(10):
+                    pyautogui.press('backspace')
+                roll_number = search_db(hexUID)
+                if roll_number:
+                    record_keystrokes = False
+                    pyautogui.typewrite(roll_number)
+                    record_keystrokes = True
+                    scanned_uid = ""
         # Reset the scanned UID
         scanned_uid = ""
 
     else:
-        scanned_uid += event.name
+        if record_keystrokes:
+            scanned_uid += event.name
 
 ############################################################
 ##################### FLASK ENDPOINTS ######################
@@ -156,6 +171,30 @@ def postdata():
     except mysql.connector.Error as err:
         print(f"Error: {err}")
         return jsonify({'status': 'failed', 'received_rollno': rollno, 'received_uid':uid})
+    
+# Start and stop keystroke function
+@app.route('/keystrokeData', methods=['POST'])
+def keystrokeData():
+    global read_active
+    global write_active
+
+    data = request.get_json()
+    counter = data.get('ctr', '')
+
+    if counter == 0:
+        write_active = False
+
+        print("Write Stopped")
+        print(f"write_active: {write_active}")
+
+        return jsonify({'status':'stopped'})
+    
+    else:
+        write_active = True
+
+    print(f"Counter : {counter}")
+    
+    return jsonify({'status':'ended'})
 
 ############################################################
 #################### FLASK ENDPOINTS END ###################
