@@ -5,3 +5,4 @@ mysql
 mysql-connector-python
 keyboard
 hid
+pynput
