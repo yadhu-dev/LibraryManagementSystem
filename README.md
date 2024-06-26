@@ -88,6 +88,14 @@ The Library Management System (LMS) is designed to streamline and modernize libr
    - The serial data is read and the associated data is fetched and stored for typing.
    - On finding an input field, the data is typed in string format in the form of keystrokes and presses enter if necessary.
 
+# Installation
+
+  - Run `Installer.bat` as administrator as it installes all the software dependencies and packages required for the program to function.
+  - If any super user prompt, click allow since it needs to install python and mysql which requires additional administrative privilages.
+  - If installer fails, do the following:
+
+    1. Install python 
+
 # Benefits
 
 - **Efficiency:** Automates the checkout and return process, reducing manual workload and speeding up operations.
