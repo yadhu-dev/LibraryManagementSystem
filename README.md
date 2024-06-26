@@ -30,24 +30,23 @@ The Library Management System (LMS) is designed to streamline and modernize libr
 
 - **Arduino Board with RFID Reader:**
   - The heart of the system, responsible for reading RFID tags and sending data to the server.
+  - Prepares UID for data mapping and it's only function is to fetch UID from the tags.
   - The board is made to be completely replaceable to avoid much of hardware dependancy.
 
 - **Flask Server:**
   - A lightweight web server that reads the serial data from the micro controller and maps the data with the required UIDs.
   - Manages the database and provides APIs for updating item status.
+  - Facilitates data mapping according to UID - Data.
 
 - **RFID Tags:**
   - Attached to each library item, these tags store unique identifiers that can be read by the RFID reader.
   - Enable quick and accurate identification of items during checkouts and returns.
 
-- **WiFi Network:**
-  - Connects the Arduino board to the central server, facilitating real-time updates and communication.
-
 ## Workflow
 
 1. **User Interaction:**
    - Users scan their library card (RFID tag) and the items they wish to check out or return.
-   - The RFID reader captures the unique identifiers of the user and items.
+   - The RFID reader captures the UID from the tag and prints it serially.
 
 2. **Data Transmission:**
    - The Arduino board formats the captured data into an HTTP request.
