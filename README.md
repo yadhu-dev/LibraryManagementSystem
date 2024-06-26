@@ -14,13 +14,13 @@ The Library Management System (LMS) is designed to streamline and modernize libr
   - Each library item is equipped with an RFID tag containing a unique identifier.
   - An RFID reader integrated with an Arduino board reads these tags to capture the item's details.
 
-- **WiFi Connectivity:**
-  - The system connects to the library's WiFi network, allowing seamless communication with a central server.
-  - This connectivity ensures that the system can update the status of library items in real-time.
+- **Standalone Application:**
+  - The system connects to the local library for fetching necessary details without the need for online dependancy.
+  - This eliminates any connectivity issues like latency and downtime.
 
 - **Central Server Communication:**
-  - The Arduino board sends HTTP requests to a central server to update the database with checkout and return information.
-  - The server, implemented using Express.js, handles these requests and manages the library database.
+  - The software sends HTTP requests to a central server to update the local database with checkout and return information.
+  - The flask server handles these requests and manages the local library database which is implemented using mysql.
 
 - **Database Integration:**
   - The server stores information about library items, user transactions, and inventory status.
@@ -30,10 +30,10 @@ The Library Management System (LMS) is designed to streamline and modernize libr
 
 - **Arduino Board with RFID Reader:**
   - The heart of the system, responsible for reading RFID tags and sending data to the server.
-  - Equipped with WiFi capabilities to enable communication with the server.
+  - The board is made to be completely replaceable to avoid much of hardware dependancy.
 
-- **Express.js Server:**
-  - A lightweight web server that handles HTTP requests from the Arduino board.
+- **Flask Server:**
+  - A lightweight web server that reads the serial data from the micro controller and maps the data with the required UIDs.
   - Manages the database and provides APIs for updating item status.
 
 - **RFID Tags:**
