@@ -42,9 +42,9 @@ The Library Management System (LMS) is designed to streamline and modernize libr
   - Attached to each library item, these tags store unique identifiers that can be read by the RFID reader.
   - Enable quick and accurate identification of items during checkouts and returns.
 
-## Workflow
+# Modules
 
-# Data Mapping Module
+## Data Mapping Module
 
 1. **User Interaction:**
    - Users scan their library card (RFID tag) and the items they wish to check out or return.
@@ -59,7 +59,7 @@ The Library Management System (LMS) is designed to streamline and modernize libr
    - On receiving the mapped data, sends it to the flask server to store it in the local database.
    - The server sends a response back to the frontend to tell the user that the details has been updated.
 
-# CRUD Module
+## CRUD Module
 
 1. **User Interaction:**
    - A table with all the registered users will be shown on the page loading.
@@ -71,7 +71,24 @@ The Library Management System (LMS) is designed to streamline and modernize libr
    - The user data associated with the UID can be updated or deleted.
    - The updated data gets sent back to the flask backend to be updated in the local database.
 
-## Benefits
+## Keystroke Module
+
+1. **User Interaction:**
+   - The user can change the data mapping mode to keystroke mode by clicking the start keystroke button.
+   - When this mode is active, the roll no or any number associated with the UID read will be printed on any input field as keystrokes.
+   - This is useful for easily fetching the indentifying data through the UID of the tag without manually entering it.
+
+2. **Data Transmission:**
+   - The serial data is read by the flask backend and the associated data is fetched.
+   - The data is typed on the focused input field as keystrokes for the use case.
+   - No data is typed if the UID is not mapped.
+
+3. **Server Processing:**
+   - On activating keystroke mode, the data mapping mode ceases temporarily to avoid read clashes.
+   - The serial data is read and the associated data is fetched and stored for typing.
+   - On finding an input field, the data is typed in string format in the form of keystrokes and presses enter if necessary.
+
+# Benefits
 
 - **Efficiency:** Automates the checkout and return process, reducing manual workload and speeding up operations.
 - **User Convenience:** Allows users to manage their library transactions independently, enhancing their experience.
