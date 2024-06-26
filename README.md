@@ -44,21 +44,32 @@ The Library Management System (LMS) is designed to streamline and modernize libr
 
 ## Workflow
 
+# Data Mapping Module
+
 1. **User Interaction:**
    - Users scan their library card (RFID tag) and the items they wish to check out or return.
    - The RFID reader captures the UID from the tag and prints it serially.
 
 2. **Data Transmission:**
-   - The Arduino board formats the captured data into an HTTP request.
-   - This request is sent over the WiFi network to the central server.
+   - The serial data is read by the flask backend and printed on the frontend for data mapping.
+   - The user can give the roll number that should be mapped to the UID received.
+   - On submission, if no duplicates exist, push to the database and show confirmation.
 
 3. **Server Processing:**
-   - The server receives the HTTP request and extracts the user and item information.
-   - It updates the database to reflect the new status of the items (checked out or returned).
+   - On receiving the mapped data, sends it to the flask server to store it in the local database.
+   - The server sends a response back to the frontend to tell the user that the details has been updated.
 
-4. **Confirmation:**
-   - The server sends a response back to the Arduino board.
-   - The Arduino board provides feedback to the user, confirming the successful checkout or return.
+# CRUD Module
+
+1. **User Interaction:**
+   - A table with all the registered users will be shown on the page loading.
+   - The user can tap the RFID tag to search for the data associated with the UID scanned.
+   - The user can perform the crud operation required and save changes to the local dataabse.
+
+2. **Server Processing:**
+   - On reading the RFID card, the data is sent serially to the backend for filtering the user.
+   - The user data associated with the UID can be updated or deleted.
+   - The updated data gets sent back to the flask backend to be updated in the local database.
 
 ## Benefits
 
