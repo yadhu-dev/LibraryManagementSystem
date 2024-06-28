@@ -6,11 +6,11 @@
     <title>Form and Script Controls</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}"> -->
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
     <link href="{{url_for('static',filename='css/output.css')}}" rel="stylesheet">
   </head>
   <body>
-    <div class="main bg-slate-600">
+    <div class="main bg-white">
       <div class="container">
         <form id="data-form">
           <div class="uid">
@@ -35,7 +35,57 @@
       </div>
     </div>
 
-    <!-- <script src="{{url_for('static', filename='script.js')}}"></script> -->
+    <script src="{{url_for('static', filename='script.js')}}"></script>
 
   </body>
 </html>
+
+<!-- New Design -->
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Form and Script Controls</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="{{url_for('static',filename='css/output.css')}}" rel="stylesheet">
+  </head>
+  <body>
+    <div class="main bg-slate-600 h-svh grid grid-flow-col grid-cols-2">
+      <div class="left col-span-1  bg-gray-300  rounded-xl w-5/6 h-4/5 m-6 p-4  ">
+        <div class="leftcont ">
+          <div class="input text-center rounded-3xl p-4 m-1">
+            <div class="uid flex justify-center">
+              <h2 class="text-xl m-3 font-semibold">UID</h2>
+              <input type="text" placeholder="UID" class="p-1 m-2 w-72 rounded-lg text-gray-700 italic">
+            </div>
+            <div class="no flex justify-center">
+              <h2 class="text-xl font-semibold m-3">NO</h2>
+              <input type="text" placeholder="NO" class="p-1 m-2 w-72 rounded-lg text-gray-700 italic">
+            </div>
+            <button class="bg-blue-800 p-2 rounded-xl text-white font-bold m-2">Submit</button>
+          </div>
+          <div class="keystroke rounded-3xl p-4">
+            <h1 class="text-xl font-semibold text-center">keystroke Mode</h1>
+            <div class="kbtn flex justify-center">
+              <button class="bg-blue-600 p-2 rounded-xl text-white font-bold m-2 w-20 ">Start</button>
+              <button class="bg-red-600 p-2 rounded-xl text-white font-bold m-2 w-20">Stop</button>
+            </div>
+          </div>
+      </div>
+      </div>
+      <div class="right bg-gray-300  rounded-xl w-5/6 h-4/5 m-6 p-4">
+        <h1 class="text-center text-3xl font-semibold">CRUD Operations</h1>
+        <div class="btns grid  grid-flow-row-dense grid-cols-2 ">
+          <button class="col-span-1 bg-green-600 m-2 text-white p-2 rounded-xl">Update</button>
+          <button class="col-span-1 bg-red-600 m-2 text-white p-2 rounded-xl">Delete</button>
+          <Button class="col-span-2 bg-blue-600 m-2 text-white p-2 rounded-xl" >View</Button>
+        </div>
+      </div>
+    </div>
+
+     <script src="{{url_for('static', filename='script.js')}}"></script> 
+
+  </body>
+</html> -->
