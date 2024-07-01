@@ -1,10 +1,10 @@
-import mysql.connector
-import mysql
+# import mysql.connector
+# import mysql
 from flask import Flask, render_template, jsonify, request
-import serial
-import time
-import threading
-import pyautogui
+# import serial
+# import time
+# import threading
+# import pyautogui
 
 app = Flask(__name__)
 
