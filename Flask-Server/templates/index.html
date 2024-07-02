@@ -53,13 +53,10 @@
   </head>
   <body class="min-h-screen lg:overflow-y-hidden">
     <div class="min-h-screen flex flex-col bg-[#EDF1F7]">
-      <nav
-        class="bg-[#FFFFFF] drop-shadow-md"
-      >
-      <div
-      class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
+      <nav class="bg-[#FFFFFF] drop-shadow-md p-3">
+      <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl ">
         <div class="kjc flex">
-          <img src="{{url_for('static',filename='res/KJCLogo.png')}}" />
+          <img src="{{url_for('static',filename='res/KJCLogo.png')}}"/>
           <p class="ml-3">Kristu Jayanti College (Autonomous)</p>
         </div>
         <div class="att mr-72 text-center">
@@ -74,9 +71,7 @@
       <div class="grid grid-flow-col grid-cols-2">
         <div class="rhead m-28 w-2/3">
           <h1 class="text-3xl m-3 font-semibold">Attendance</h1>
-          <h1 class="text-3xl text-[#3E8ED0] m-3 font-semibold">
-            for your event
-          </h1>
+          <h1 class="text-3xl text-[#3E8ED0] m-3 font-semibold">for your event</h1>
           <p class="text-sm m-3">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
             itaque accusantium odio, soluta, corrupti aliquam quibusdam tempora
@@ -85,14 +80,10 @@
           </p>
         </div>
         <div class="main my-28 ml-32">
-          <nav
-            class="bg-[#3E8ED0] text-white text-l w-2/3 p-1 rounded-t-md pl-4"
-          >
+          <nav class="bg-[#3E8ED0] text-white text-l w-2/3 p-1 rounded-t-md pl-4">
             Key Stroke Mode
           </nav>
-          <div
-            class="buttons bg-[#E8F1FE] w-2/3 h-36 p-2 flex justify-evenly border-2 border-[#3E8ED0] rounded-b-md"
-          >
+          <div class="buttons bg-[#E8F1FE] w-2/3 h-36 p-2 flex justify-evenly border-2 border-[#3E8ED0] rounded-b-md">
             <button class="bg-[#3E8ED0] h-10 my-10 w-28 text-white rounded-md">
               Start
             </button>
@@ -102,11 +93,7 @@
           </div>
         </div>
       </div>
-      <img
-        src="{{url_for('static',filename='res/homeEllipse.png')}}"
-        alt=""
-        srcset=""
-        class="z-0 lg:ml-44"
+      <img src="{{url_for('static',filename='res/homeEllipse.png')}}" alt="" srcset="" class="z-0 bottom-0"
       />
     </div>
     <script src="{{url_for('static', filename='script.js')}}"></script>
