@@ -51,36 +51,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <div class="container mx-auto px-4 min-h-full">
-      <nav class="bg-[#EDF1F7] flex p-4 w-full h-36 justify-between">
-        <div class="kjc flex ">
-          <img src="{{url_for('static',filename='res/KJCLogo.png')}}">
+  <body class="h-full">
+    <div class="container mx-auto bg-[#EDF1F7]">
+      <nav
+        class="bg-[#FFFFFF] flex p-2 w-full h-12 justify-between drop-shadow-md"
+      >
+        <div class="kjc flex">
+          <img src="{{url_for('static',filename='res/KJCLogo.png')}}" />
           <p class="ml-3">Kristu Jayanti College (Autonomous)</p>
         </div>
-        <div class="att text-center">
-          <h1>Attendance</h1>
+        <div class="att mr-72 text-center">
+          <h1 class="font-semibold">Attendance</h1>
         </div>
-        <div class="log">  
-          <button>Login</button>
+        <div class="log">
+          <button class="bg-[#3E8ED0] text-white p-1 w-20 rounded-2xl">
+            Login
+          </button>
         </div>
       </nav>
-      <div>
-        <div class="rhead">
-          <h1>Attendance</h1>
-          <h1>for your event</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, itaque accusantium odio, soluta, corrupti aliquam quibusdam tempora at cupiditate quis eum maiores libero veritatis? Dicta facilis sint aliquid ipsum atque?</p>
+      <div class="grid grid-flow-col grid-cols-2">
+        <div class="rhead m-28 w-2/3">
+          <h1 class="text-3xl m-3 font-semibold">Attendance</h1>
+          <h1 class="text-3xl text-[#3E8ED0] m-3 font-semibold">
+            for your event
+          </h1>
+          <p class="text-sm m-3">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
+            itaque accusantium odio, soluta, corrupti aliquam quibusdam tempora
+            at cupiditate quis eum maiores libero veritatis? Dicta facilis sint
+            aliquid ipsum atque?
+          </p>
         </div>
-        <div class="main">
-          <nav><h1>Key Stroke Mode</h1></nav>
-          <div class="buttons">
-            <button>Start</button>
-            <button>Stop</button>
+        <div class="main my-28 ml-32">
+          <nav
+            class="bg-[#3E8ED0] text-white text-l w-2/3 p-1 rounded-t-md pl-4"
+          >
+            Key Stroke Mode
+          </nav>
+          <div
+            class="buttons bg-[#E8F1FE] w-2/3 h-36 p-2 flex justify-evenly border-2 border-[#3E8ED0] rounded-b-md"
+          >
+            <button class="bg-[#3E8ED0] h-10 my-10 w-28 text-white rounded-md">
+              Start
+            </button>
+            <button class="bg-[#3E8ED0] h-10 my-10 w-28 text-white rounded-md">
+              Stop
+            </button>
           </div>
         </div>
       </div>
-      <img src="{{url_for('static',filename='res/homeEllipse.png')}}" alt="" srcset="">
+      <img
+        src="{{url_for('static',filename='res/homeEllipse.png')}}"
+        alt=""
+        srcset=""
+        class="z-0 lg:ml-44"
+      />
     </div>
-     <script src="{{url_for('static', filename='script.js')}}"></script> 
+    <script src="{{url_for('static', filename='script.js')}}"></script>
   </body>
 </html>
