@@ -61,7 +61,7 @@ async function postData() {
     const jsonResponse = await response.json();
     console.log(JSON.stringify(jsonResponse));
 
-    if (jsonResponse.status) {
+    if (jsonResponse.status) {  
       if (jsonResponse.status == "success") {
         alert("RollNo has been added");
       } else {
@@ -72,6 +72,17 @@ async function postData() {
     document.getElementById("getrollno").value = "";
   } catch (error) {
     console.error(error);
+  }
+}
+
+// Update data function
+async function updateData(change) {
+  try {
+    
+  }
+  
+  catch(error) {
+    console.log(error)
   }
 }
 
