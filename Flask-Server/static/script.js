@@ -1,20 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
   const startWriteBtn = document.getElementById("start-write");
   const stopWriteBtn = document.getElementById("stop-write");
+  const crudButton = document.getElementById("crudBtn");
 
   startWriteBtn.addEventListener("click", function () {
     console.log("Write started");
     startWriteBtn.disabled = true;
     stopWriteBtn.disabled = false;
-    // Add your start write functionality here
   });
 
   stopWriteBtn.addEventListener("click", function () {
     console.log("Write stopped");
     startWriteBtn.disabled = false;
     stopWriteBtn.disabled = true;
-    // Add your stop write functionality here
   });
+
+  crudButton.addEventListener("click", function(){
+    window.location.href = "http://localhost:5000/map"
+  })
 
   const form = document.getElementById("data-form");
   form.addEventListener("submit", function (event) {
