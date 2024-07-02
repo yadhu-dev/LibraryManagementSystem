@@ -1,16 +1,88 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Data Mapping</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <h1>wassup</h1>
-        <button onclick=window,location.href="http://localhost:5000/">go back</button>
-        <script src="" async defer></script>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Form and Script Controls</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen lg:overflow-y-hidden">
+    <div class="min-h-screen flex flex-col bg-[#EDF1F7]">
+      <nav class="bg-[#FFFFFF] drop-shadow-md p-3">
+      <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl ">
+        <div class="kjc flex">
+          <img src="{{url_for('static',filename='res/KJCLogo.png')}}"/>
+          <p class="ml-3">Kristu Jayanti College (Autonomous)</p>
+        </div>
+        <div class="att mr-72 text-center">
+          <h1 class="font-semibold">Attendance</h1>
+        </div>
+        <div class="log flex">
+            <div class="mx-4">
+              <a href="" class="mx-2 text-[#3E8ED0] font-semibold">HOME</a>
+              <a href="" class="mx-2 text-[#3E8ED0] font-semibold">UID MAPPING</a>
+              <a href="" id="crudBtn" class="mx-2 text-[#3E8ED0] font-semibold">CRUD</a>
+            </div>
+          <button class="bg-[#3E8ED0] text-white p-1 w-20 rounded-2xl " id="loginpopupbtn">
+            Login
+          </button>
+        </div>
+      </nav>
+      <div >
+        <div class="popup absolute -ml-40 -mt-40 bg-white w-72 h-72  top-1/2 left-1/2  drop-shadow-xl z-50 p-2 rounded-lg hidden ">
+          <button class="bg-[#127FBF] rounded-full right-2 absolute h-6 w-6 text-white font-semibold" id="loginclbtn">&times;</button>
+          <div class="p-2">
+            <h1 class="text-[#127FBF] text-xl font-bold my-2">Login</h1>
+            <p class="my-2">Email</p>
+            <input type="text" value="" placeholder="abc@gmail.com" class="bg-[#F0F4F8] p-1 w-64 text-l border-none outline-none rounded-md my-2">
+            <p class="my-2">Password</p>
+            <input type="text" value="" placeholder="***********" class="bg-[#F0F4F8] p-1 w-64 text-l border-none outline-none rounded-md my-2" >
+            <button class="bg-[#127FBF] p-1 w-64 my-2 rounded-md text-white ">Login</button>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-flow-col grid-cols-2">
+        <div class="rhead m-28 w-2/3">
+          <h1 class="text-3xl m-3 font-semibold">Attendance</h1>
+          <h1 class="text-3xl text-[#3E8ED0] m-3 font-semibold">for your event</h1>
+          <p class="text-sm m-3">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
+            itaque accusantium odio, soluta, corrupti aliquam quibusdam tempora
+            at cupiditate quis eum maiores libero veritatis? Dicta facilis sint
+            aliquid ipsum atque?
+          </p>
+        </div>
+        <div class="main my-28 ml-24">
+          <nav class="bg-[#3E8ED0] text-white text-l w-3/4 p-1 rounded-t-md pl-4">
+            UID Mapping
+          </nav>
+          <div class="buttons bg-[#E8F1FE] w-3/4 h-52 p-2 flex-col justify-evenly border-2 border-[#3E8ED0] rounded-b-md md:flex-col lg:flex-row ">
+            <div class="flex mx-4 my-5">
+                <p class="text-[#3E8ED0] text-lg mr-9 font-semibold">UID No.</p>
+                <input type="text" name="" id="" class="w-3/4">
+            </div>
+            <div class="flex mx-4 my-10">
+                <p class="text-[#3E8ED0] text-lg mr-8 font-semibold">Number</p>
+                <input type="text" name="" id="" class="w-3/4">
+            </div>
+            <button class="bg-[#127FBF] p-1 left-72 w-40 rounded-md text-white relative">Submit</button>
+          </div>
+        </div>
+      </div>
+      <img src="{{url_for('static',filename='res/homeEllipse.png')}}" alt="" srcset="" class="z-0 bottom-0"
+      />
+    </div>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+    <script>
+      document.getElementById("loginpopupbtn").addEventListener("click",function(){
+        document.querySelector(".popup").style.display = "flex"
+      })
+
+      document.getElementById("loginclbtn").addEventListener("click",function(){
+        document.querySelector(".popup").style.display = "none"
+      })
+    </script>
+  </body>
 </html>
