@@ -63,20 +63,22 @@
           <h1 class="font-semibold">Attendance</h1>
         </div>
         <div class="log">
-          <button class="bg-[#3E8ED0] text-white p-1 w-20 rounded-2xl ">
+          <button class="bg-[#3E8ED0] text-white p-1 w-20 rounded-2xl " id="loginpopupbtn">
             Login
           </button>
         </div>
       </nav>
-      <div class="absolute -ml-40 -mt-40 bg-white w-72 h-72  top-1/2 left-1/2  drop-shadow-lg z-50 p-2 rounded-lg hidden">
-        <button class="bg-[#127FBF] rounded-full right-2 absolute h-6 w-6 text-white font-semibold">&times;</button>
-        <div class="p-3">
-          <h1 class="text-[#127FBF] text-xl font-bold my-2">Login</h1>
-          <p class="my-2">Email</p>
-          <input type="text" value="" placeholder="abc@gmail.com" class="bg-[#F0F4F8] p-1 w-64 text-l border-none outline-none rounded-md my-2">
-          <p class="my-2">Password</p>
-          <input type="text" value="" placeholder="***********" class="bg-[#F0F4F8] p-1 w-64 text-l border-none outline-none rounded-md my-2" >
-          <button class="bg-[#127FBF] p-1 w-64 my-2 rounded-md text-white ">Login</button>
+      <div >
+        <div class="popup absolute -ml-40 -mt-40 bg-white w-72 h-72  top-1/2 left-1/2  drop-shadow-xl z-50 p-2 rounded-lg hidden ">
+          <button class="bg-[#127FBF] rounded-full right-2 absolute h-6 w-6 text-white font-semibold" id="loginclbtn">&times;</button>
+          <div class="p-2">
+            <h1 class="text-[#127FBF] text-xl font-bold my-2">Login</h1>
+            <p class="my-2">Email</p>
+            <input type="text" value="" placeholder="abc@gmail.com" class="bg-[#F0F4F8] p-1 w-64 text-l border-none outline-none rounded-md my-2">
+            <p class="my-2">Password</p>
+            <input type="text" value="" placeholder="***********" class="bg-[#F0F4F8] p-1 w-64 text-l border-none outline-none rounded-md my-2" >
+            <button class="bg-[#127FBF] p-1 w-64 my-2 rounded-md text-white ">Login</button>
+          </div>
         </div>
       </div>
       <div class="grid grid-flow-col grid-cols-2">
@@ -108,5 +110,14 @@
       />
     </div>
     <script src="{{url_for('static', filename='script.js')}}"></script>
+    <script>
+      document.getElementById("loginpopupbtn").addEventListener("click",function(){
+        document.querySelector(".popup").style.display = "flex"
+      })
+
+      document.getElementById("loginclbtn").addEventListener("click",function(){
+        document.querySelector(".popup").style.display = "none"
+      })
+    </script>
   </body>
 </html>
