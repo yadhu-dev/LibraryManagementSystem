@@ -51,11 +51,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="h-full">
-    <div class="container mx-auto bg-[#EDF1F7]">
+  <body class="min-h-screen lg:overflow-y-hidden">
+    <div class="min-h-screen flex flex-col bg-[#EDF1F7]">
       <nav
-        class="bg-[#FFFFFF] flex p-2 w-full h-12 justify-between drop-shadow-md"
+        class="bg-[#FFFFFF] drop-shadow-md"
       >
+      <div
+      class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
         <div class="kjc flex">
           <img src="{{url_for('static',filename='res/KJCLogo.png')}}" />
           <p class="ml-3">Kristu Jayanti College (Autonomous)</p>
