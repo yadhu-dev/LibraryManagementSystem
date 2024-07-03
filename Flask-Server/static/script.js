@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   const startWriteBtn = document.getElementById("start-write");
   const stopWriteBtn = document.getElementById("stop-write");
-  const crudButton = document.getElementById("crudBtn");
+  const mapButton = document.getElementById("nav-map");
+  const mapButton1 = document.getElementById("nav-map-1");
 
   startWriteBtn.addEventListener("click", function () {
     console.log("Write started");
@@ -15,7 +16,11 @@ document.addEventListener("DOMContentLoaded", function () {
     stopWriteBtn.disabled = true;
   });
 
-  crudButton.addEventListener("click", function(){
+  mapButton.addEventListener("click", function() {
+    window.location.href = "http://localhost:5000/map"
+  })
+
+  mapButton1.addEventListener("click", function() {
     window.location.href = "http://localhost:5000/map"
   })
 
@@ -52,7 +57,7 @@ async function postData() {
 
     console.log(id, roll);
 
-    const response = await fetch("http://127.0.0.1:5000/postdata", {
+    const response = await fetch("http://localhost:5000/postdata", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -92,7 +97,7 @@ async function updateData(change) {
 // Function to send data for search and keystroke function
 async function keystrokeData(counter) {
   try {
-    const response = await fetch("http://127.0.0.1:5000/keystrokeData", {
+    const response = await fetch("http://localhost:5000/keystrokeData", {
       method: "POST",
       headers: {
         Accept: "application/json",
