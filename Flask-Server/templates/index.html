@@ -11,33 +11,33 @@
   </head>
   <body class="min-h-screen lg:overflow-y-hidden">
     <div class="min-h-screen flex flex-col bg-[#EDF1F7]">
-      <nav class="bg-[#FFFFFF] md:drop-shadow-md p-2 z-20">
-      <div class="flex flex-auto justify-between items-center ">
-        <div class="kjc flex">
-          <img src="{{url_for('static',filename='res/KJCLogo.png')}}"/>
-          <p class="ml-3 hidden md:flex">Kristu Jayanti College </p>
-        </div>
-        <div class="att text-center">
-          <h1 class="font-semibold md:text-center">Attendance</h1>
-        </div>
-        <div class="log flex">
-          <div class="mx-4 my-1 hidden md:flex ">
-            <a href="" class="mx-2 text-[#3E8ED0] font-semibold" id="nav-home">HOME</a>
-            <a href="" class="mx-2 text-[#3E8ED0] font-semibold" id="nav-map">UID MAPPING</a>
+      <nav class="bg-[#FFFFFF] md:drop-shadow-md p-2 z-20 xl:h-16 xl:p-4">
+        <div class="flex flex-auto justify-between items-center ">
+          <div class="kjc flex">
+            <img src="{{url_for('static',filename='res/KJCLogo.png')}}"/>
+            <p class="ml-3 hidden md:flex xl:text-lg">Kristu Jayanti College </p>
+          </div>
+          <div class="att text-center">
+            <h1 class="font-semibold md:text-center xl:text-lg">Attendance</h1>
+          </div>
+          <div class="log flex">
+            <div class="mx-4 my-1 hidden md:flex ">
+              <a href="" class="mx-2 text-[#3E8ED0] font-semibold" id="nav-home">HOME</a>
+              <a href="" class="mx-2 text-[#3E8ED0] font-semibold" id="nav-map">UID MAPPING</a>
+              <a href="" id="crudBtn" class="mx-2 text-[#3E8ED0] font-semibold">CRUD</a>
+            </div>
+            <button class="bg-[#3E8ED0] text-white p-1 w-20 rounded-2xl " id="loginpopupbtn">
+              Login
+            </button>
+          </div>
+        </nav>
+        <nav class="bg-white drop-shadow-md p-2 z-10 flex justify-center -my-2 md:hidden">
+          <div class="mx-4 my-1">
+            <a href="" class="mx-2 text-[#3E8ED0] font-semibold" id="nav-home-1">HOME</a>
+            <a href="" class="mx-2 text-[#3E8ED0] font-semibold" id="nav-map-1">UID MAPPING</a>
             <a href="" id="crudBtn" class="mx-2 text-[#3E8ED0] font-semibold">CRUD</a>
           </div>
-          <button class="bg-[#3E8ED0] text-white p-1 w-20 rounded-2xl " id="loginpopupbtn">
-            Login
-          </button>
-        </div>
-      </nav>
-      <nav class="bg-white drop-shadow-md p-2 z-10 flex justify-center -my-2 md:hidden">
-        <div class="mx-4 my-1">
-          <a href="" class="mx-2 text-[#3E8ED0] font-semibold" id="nav-home-1">HOME</a>
-          <a href="" class="mx-2 text-[#3E8ED0] font-semibold" id="nav-map-1">UID MAPPING</a>
-          <a href="" id="crudBtn" class="mx-2 text-[#3E8ED0] font-semibold">CRUD</a>
-        </div>
-      </nav>
+        </nav>
       <div class="popup min-h-screen hidden z-20 bg-[#EDF1F7]">
         <div class="absolute -ml-40 -mt-40 bg-white w-72 h-72  top-1/2 left-1/2  drop-shadow-xl  p-2 rounded-lg ease-in-out duration-300">
           <button class="bg-[#127FBF] rounded-full right-2 absolute h-6 w-6 text-white font-semibold" id="loginclbtn">&times;</button>
@@ -52,25 +52,25 @@
         </div>
       </div>
       <div class="flex flex-col min-h-screen z-10 md:grid md:grid-flow-col md:grid-cols-2">
-        <div class="rhead mt-10 mx-10 w-2/3 md:my-36 md:mx-24">
-          <h1 class="text-3xl font-semibold">Attendance</h1>
-          <h1 class="text-3xl text-[#3E8ED0] font-semibold">for your event</h1>
-          <p class="text-sm ">
+        <div class="rhead mt-8 mx-10 w-2/3 md:my-36 md:mx-24 xl:my-44 xl:mx-32">
+          <h1 class="text-3xl font-semibold xl:text-5xl xl:m-4">Attendance</h1>
+          <h1 class="text-3xl text-[#3E8ED0] font-semibold xl:text-5xl xl:m-4">for your event</h1>
+          <p class="text-sm xl:text-lg xl:m-4">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
             itaque accusantium odio, soluta, corrupti aliquam quibusdam tempora
             at cupiditate quis eum maiores libero veritatis? Dicta facilis sint
             aliquid ipsum atque?
           </p>
         </div>
-        <div class="main mt-10 ml-14 z-10 md:my-36">
-          <nav class="bg-[#3E8ED0] text-white text-l w-5/6 p-1 rounded-t-md pl-4 md:w-3/4">
+        <div class="main my-8 ml-5 md:my-36 xl:my-44 ">
+          <nav class="bg-[#3E8ED0] text-white text-xl w-11/12 p-2 rounded-t-md pl-4 xl:p-4 xl:text-2xl ">
             Key Stroke Mode
           </nav>
-          <div class="buttons bg-[#E8F1FE] w-5/6 h-36 p-2 flex justify-evenly border-2 border-[#3E8ED0] rounded-b-md md:flex md:w-3/4">
-            <button class="bg-[#3E8ED0] h-10 my-10 mx-5 w-28 text-white rounded-md " id="start-write" onclick="keystrokeData(1)">
+          <div class="relative buttons bg-[#E8F1FE] w-11/12 h-52 p-2 flex justify-evenly border-2 border-[#3E8ED0] rounded-b-md xl:h-72 xl:p-4">
+            <button class="bg-[#3E8ED0] text-lg h-10 my-16 mx-5 w-28 text-white rounded-md xl:h-16 xl:w-52 xl:text-2xl" id="start-write" onclick="keystrokeData(1)">
               Start
             </button>
-            <button class="bg-[#3E8ED0] h-10 my-10 mx-5 w-28 text-white rounded-md" id="stop-write" onclick="keystrokeData(0)">
+            <button class="bg-[#3E8ED0] text-lg h-10  my-16 mx-5 w-28 text-white rounded-md xl:h-16 xl:w-52 xl:text-2xl" id="stop-write" onclick="keystrokeData(0)">
               Stop
             </button>
           </div>
