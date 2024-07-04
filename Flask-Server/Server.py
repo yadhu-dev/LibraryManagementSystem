@@ -129,13 +129,19 @@ def index():
 
 # HOMEPAGE END
 
-# CRUD PAGE
+# MAPPING PAGE
 
 @app.route('/map')
-def crud():
+def map():
     return render_template('map.html')
 
-# CRUD PAGE END
+# MAPPING PAGE END
+
+# CRUD PAGE
+
+@app.route('/crud')
+def crud():
+    return render_template('crud.html')
 
 #######################################################
 ######## END POINT FOR AUTOMATICALLY FETCHING UID######

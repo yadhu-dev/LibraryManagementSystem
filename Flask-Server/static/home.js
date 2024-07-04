@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const startWriteBtn = document.getElementById("start-write");
   const stopWriteBtn = document.getElementById("stop-write");
-  const mapButton = document.getElementById("nav-map");
-  const mapButton1 = document.getElementById("nav-map-1");
 
   startWriteBtn.addEventListener("click", function () {
     console.log("Write started");
@@ -17,14 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Write stopped");
     startWriteBtn.disabled = false;
     stopWriteBtn.disabled = true;
-  });
-
-  mapButton.addEventListener("click", function () {
-    window.location.href = "http://127.0.0.1:5000/map";
-  });
-
-  mapButton1.addEventListener("click", function () {
-    window.location.href = "http://127.0.0.1:5000/map";
   });
 });
 
