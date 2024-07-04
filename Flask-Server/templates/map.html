@@ -75,7 +75,7 @@
               <p class="text-[#3E8ED0] text-lg mr-6 font-semibold xl:text-xl">Number</p>
               <input type="text" name="" id="getrollno" class="w-5/6 h-8 xl:h-10 xl:ml-2">
             </div>
-            <button class="absolute bottom-3 right-5 bg-[#127FBF] p-2 rounded-md text-white btn xl:p-3 xl:w-28 xl:right-16" onclick="postData()">Submit</button>
+            <button class="absolute bottom-3 right-5 bg-[#127FBF] p-2 rounded-md text-white btn xl:p-3 xl:w-28 xl:right-16" id="submitBtn" onclick="postData()">Submit</button>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
         <img src="{{url_for('static',filename='res/homeEllipse.png')}}" alt="" srcset=""/>
       </div>
     </div>
-    <script src="{{url_for('static', filename='script.js')}}"></script>
+    <script src="{{url_for('static', filename='map.js')}}"></script>
     <script>
       document.getElementById("loginpopupbtn").addEventListener("click",function(){
         document.querySelector(".popup").style.display = "flex"
