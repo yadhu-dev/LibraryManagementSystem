@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Function to send data for search and keystroke function
-async function keystrokeData(counster) {
+async function keystrokeData(counter) {
   if (counter == 1) {
     document.getElementById("start-write").classList.add("bg-[#808080]");
     document.getElementById("stop-write").classList.remove("bg-[#808080]");
