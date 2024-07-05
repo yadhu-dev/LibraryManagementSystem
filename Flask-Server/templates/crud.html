@@ -1,15 +1,57 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <h2>CRUD PAGE :D</h2>
-        <script src="" async defer></script>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Form and Script Controls</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../static/styles/style.css">
+  </head>
+  <body class="min-h-screen lg:overflow-y-hidden">
+    <div class="min-h-screen flex flex-col bg-[#EDF1F7]">
+      <nav class="bg-[#FFFFFF] md:drop-shadow-md p-2 z-20 xl:h-16 xl:p-4">
+        <div class="flex flex-auto justify-between items-center ">
+          <div class="kjc flex">
+            <img src="{{url_for('static',filename='res/KJCLogo.png')}}"/>
+            <p class="ml-3 hidden md:flex xl:text-lg">Kristu Jayanti College </p>
+          </div>
+          <div class="att text-center">
+            <h1 class="font-semibold md:text-center xl:text-lg">Attendance</h1>
+          </div>
+          <div class="log flex">
+            <div class="mx-4 my-1 hidden md:flex ">
+              <a href="http://127.0.0.1:5000/" class="mx-2 text-[#3E8ED0] font-semibold">HOME</a>
+              <a href="http://127.0.0.1:5000/map" class="mx-2 text-[#3E8ED0] font-semibold">UID MAPPING</a>
+              <a href="http://127.0.0.1:5000/crud" id="crudBtn" class="mx-2 text-[#3E8ED0] font-semibold">CRUD</a>
+            </div>
+            <button class="bg-[#3E8ED0] text-white p-1 w-20 rounded-2xl " id="loginpopupbtn">
+              Login
+            </button>
+          </div>
+        </nav>
+        <nav class="bg-white drop-shadow-md p-2 z-10 flex justify-center -my-2 md:hidden">
+          <div class="mx-4 my-1">
+            <a href="http://127.0.0.1:5000/" class="mx-2 text-[#3E8ED0] font-semibold">HOME</a>
+            <a href="http://127.0.0.1:5000/map" class="mx-2 text-[#3E8ED0] font-semibold">UID MAPPING</a>
+            <a href="http://127.0.0.1:5000/crud" id="crudBtn" class="mx-2 text-[#3E8ED0] font-semibold">CRUD</a>
+          </div>
+        </nav>
+        <div class="table">
+            <table class="table table-hover">
+            </table>       
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='home.js')}}"></script>
+    <script>
+      document.getElementById("loginpopupbtn").addEventListener("click",function(){
+        document.querySelector(".popup").style.display = "flex"
+      })
+
+      document.getElementById("loginclbtn").addEventListener("click",function(){
+        document.querySelector(".popup").style.display = "none"
+      })
+    </script>
+  </body>
 </html>
