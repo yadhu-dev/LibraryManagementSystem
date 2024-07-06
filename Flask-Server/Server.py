@@ -1,6 +1,6 @@
 import mysql.connector
 import mysql
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 import serial
 import time
 import threading
@@ -137,11 +137,59 @@ def map():
 
 # MAPPING PAGE END
 
-# CRUD PAGE
+# CRUD PAGE AND LOAD DATA
 
 @app.route('/crud')
 def crud():
-    return render_template('crud.html')
+    mycursor = mydb.cursor()
+    try:
+        mycursor.execute('SELECT * FROM details')
+        users = mycursor.fetchall()
+        for user in users:
+            print(f"User UID: {user[0]}, User No: {user[1]}")  # Debug output
+    except Exception as e:
+        print(f"Error: {e}")
+        return "An error occurred"
+    finally:
+        mycursor.close()
+    return render_template('crud.html', users=users)
+
+# CRUD PAGE AND LOAD DATA END
+
+# CRUD PAGE UPDATE FUNCTION
+
+@app.route('/update_user/<uid>', methods=['POST'])
+def update_user(uid):
+    name = request.form['name']
+    mycursor = mydb.cursor()
+    try:
+        mycursor.execute('UPDATE details SET no=%s WHERE uid=%s', (name, uid))
+        mydb.commit()
+    except Exception as e:
+        print(f"Error: {e}")
+        return "An error occurred"
+    finally:
+        mycursor.close()
+    return redirect(url_for('crud'))
+
+# CRUD PAGE UPDATE FUNCTION END
+
+# CRUD PAGE DELETE FUNCTION
+
+@app.route('/delete_user/<uid>')
+def delete_user(uid):
+    mycursor = mydb.cursor()
+    try:
+        mycursor.execute('DELETE FROM details WHERE uid=%s', (uid,))
+        mydb.commit()
+    except Exception as e:
+        print(f"Error: {e}")
+        return "An error occurred"
+    finally:
+        mycursor.close()
+    return redirect(url_for('crud'))
+
+# CRUD PAGE DELETE FUNCTION END
 
 #######################################################
 ######## END POINT FOR AUTOMATICALLY FETCHING UID######
