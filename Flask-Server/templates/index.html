@@ -44,10 +44,10 @@
           <div class="p-2">
             <h1 class="text-[#127FBF] text-xl font-bold my-2">Login</h1>
             <p class="my-2">Email</p>
-            <input type="text" value="" placeholder="abc@gmail.com" class="bg-[#F0F4F8] p-1 w-64 text-l border-none outline-none rounded-md my-2">
+            <input type="text" value="" placeholder="abc@gmail.com" class="bg-[#F0F4F8] p-1 w-64 text-l border-none outline-none rounded-md my-2" id="user-name">
             <p class="my-2">Password</p>
-            <input type="text" value="" placeholder="***********" class="bg-[#F0F4F8] p-1 w-64 text-l border-none outline-none rounded-md my-2" >
-            <button class="bg-[#127FBF] p-1 w-64 my-2 rounded-md text-white ">Login</button>
+            <input type="text" value="" placeholder="***********" class="bg-[#F0F4F8] p-1 w-64 text-l border-none outline-none rounded-md my-2" id="user-password">
+            <button class="bg-[#127FBF] p-1 w-64 my-2 rounded-md text-white " id="login-submit">Login</button>
           </div>
         </div>
       </div>
@@ -81,6 +81,7 @@
       </div>
     </div>
     <script src="{{url_for('static', filename='home.js')}}"></script>
+    <script type="module" src="{{url_for('static', filename='login.js')}}"></script>
     <script>
       document.getElementById("loginpopupbtn").addEventListener("click",function(){
         document.querySelector(".popup").style.display = "flex"
