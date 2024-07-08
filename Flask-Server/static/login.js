@@ -19,6 +19,7 @@ const auth = getAuth(app);
 const loginbtn = document.getElementById("login-submit");
 const username = document.getElementById("user-name");
 const password = document.getElementById("user-password");
+const user = "";
 
 // Login function
 
@@ -29,8 +30,8 @@ loginbtn.addEventListener('click', function(){
     var pass = password.value;
     signInWithEmailAndPassword(auth, mail, pass)
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("Signed in");
+        user = userCredential.user;
+        console.log("Signed in as "&user);
         window.alert("Signed in");
         // The options like crud page and mapping page must only show up after loggin in
         //window.location.href = "";
