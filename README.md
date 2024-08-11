@@ -108,6 +108,6 @@ This Library Management System represents a significant step forward in library 
 
 
 
-### PCB Schematic Diagram
+# PCB Schematic Diagram
 
 
