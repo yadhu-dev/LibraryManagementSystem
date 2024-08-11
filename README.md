@@ -108,6 +108,9 @@ This Library Management System represents a significant step forward in library 
 
 
 
+
+
+
 # PCB Schematic Diagram
 
-<img src="./KICAD PCB files/Rfid3.svg" alt="Schematic SVG" width="200" />
+<img src="./KICAD PCB files/Rfid3.svg" alt="Schematic SVG" width="1000" />
