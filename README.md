@@ -104,3 +104,10 @@ The Library Management System (LMS) is designed to streamline and modernize libr
 - **Real-Time Updates:** Keeps the library inventory updated in real-time, ensuring accurate availability information.
 
 This Library Management System represents a significant step forward in library automation, leveraging modern technology to improve service delivery and operational efficiency.
+
+
+
+
+### PCB Schematic Diagram
+
+
