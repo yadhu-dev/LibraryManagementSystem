@@ -36,7 +36,7 @@ void setup() {
 void loop() {
   if (Serial.available() > 0) {
     command = Serial.readStringUntil('\n');
-    command.trim();  // Remove any trailing newlines or spaces
+    command.trim();  
   }
 
   if (command.equalsIgnoreCase("-")) {
@@ -73,7 +73,7 @@ void readRFID() {
   }
 
   uint8_t readBuffer[blockSize];
-  combinedData = "";  // Clear the combined data buffer
+  combinedData = "";  
 
   for (int no = 0; no < numBlocks; no++) {
     rc = nfc.readSingleBlock(uid, no, readBuffer, blockSize);
