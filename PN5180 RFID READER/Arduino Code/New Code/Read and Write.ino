@@ -100,83 +100,95 @@ void readRFID() {
 }
 
 void writeRFID() {
-  uint8_t uid[8];
-  ISO15693ErrorCode rc = nfc.getInventory(uid);
-  /*if (ISO15693_EC_OK != rc) {
-    Serial.print(F("Error in getInventory: "));
-    Serial.println(nfc.strerror(rc));
-    return;
-  }*/
+  while (true) {
+    uint8_t uid[8];
+    ISO15693ErrorCode rc = nfc.getInventory(uid);
 
-  Serial.print(F("Inventory successful, UID="));
-  for (int i = 0; i < 8; i++) {
-    Serial.print(uid[7 - i], HEX);  
-    if (i < 7) Serial.print(":");
-  }
-  Serial.println();
-
-  uint8_t blockSize, numBlocks;
-  rc = nfc.getSystemInfo(uid, &blockSize, &numBlocks);
-  if (ISO15693_EC_OK != rc) {
-    Serial.print(F("Error in getSystemInfo: "));
-    Serial.println(nfc.strerror(rc));
-    return;
-  }
-
-  Serial.print(F("Enter data to store: "));
-  while (Serial.available() == 0) {}
-
-  String inputData = Serial.readStringUntil('\n');
-  inputData.trim();  // Remove any trailing newlines or spaces
-  inputData += "#";  // Add delimiter to the end
-  int dataLength = inputData.length();
-  int numBlocksRequired = (dataLength + blockSize - 1) / blockSize;
-
-  if (numBlocksRequired > numBlocks) {
-    Serial.println(F("Error: Not enough blocks available to store data."));
-    return;
-  }
-
-  for (int blockIndex = 0; blockIndex < numBlocksRequired; ++blockIndex) {
-    uint8_t writeBuffer[blockSize];
-    int startIndex = blockIndex * blockSize;
-    int endIndex = min(startIndex + blockSize, dataLength);
-    int length = endIndex - startIndex;
-
-    for (int i = 0; i < blockSize; ++i) {
-      writeBuffer[i] = (i < length) ? inputData[startIndex + i] : 0x00;  // Pad with zeros if input is shorter than block size
+    Serial.print(F("Inventory successful, UID="));
+    for (int i = 0; i < 8; i++) {
+      Serial.print(uid[7 - i], HEX);  
+      if (i < 7) Serial.print(":");
     }
+    Serial.println();
 
-    rc = nfc.writeSingleBlock(uid, blockIndex, writeBuffer, blockSize);
+    uint8_t blockSize, numBlocks;
+    rc = nfc.getSystemInfo(uid, &blockSize, &numBlocks);
     if (ISO15693_EC_OK != rc) {
-      Serial.print(F("Error in writeSingleBlock "));
-      Serial.print(blockIndex);
-      Serial.print(F(": "));
+      Serial.print(F("Error in getSystemInfo: "));
       Serial.println(nfc.strerror(rc));
       return;
     }
 
-    Serial.print(F("Data written to block #"));
-    Serial.print(blockIndex);
-    Serial.println(F(" successfully."));
-  }
+    Serial.print(F("Enter data to store: "));
+    while (Serial.available() == 0) {}
 
-  for (int blockIndex = 0; blockIndex < numBlocksRequired; ++blockIndex) {
-    uint8_t readBuffer[blockSize];
-    rc = nfc.readSingleBlock(uid, blockIndex, readBuffer, blockSize);
-    if (ISO15693_EC_OK == rc) {
-      Serial.print(F("Data in block #"));
-      Serial.print(blockIndex);
-      Serial.print(F(": "));
-      for (int i = 0; i < blockSize; i++) {
-        Serial.print((char)readBuffer[i]);
+    String inputData = Serial.readStringUntil('\n');
+    inputData.trim(); 
+
+    if(inputData != "_"){
+
+      inputData += "#";  // Add delimiter to the end
+      int dataLength = inputData.length();
+      int numBlocksRequired = (dataLength + blockSize - 1) / blockSize;
+
+      if (numBlocksRequired > numBlocks) {
+        Serial.println(F("Error: Not enough blocks available to store data."));
+        return;
       }
-      Serial.println();
-    } else {
-      Serial.print(F("Error in readSingleBlock "));
-      Serial.print(blockIndex);
-      Serial.print(F(": "));
-      Serial.println(nfc.strerror(rc));
+
+      for (int blockIndex = 0; blockIndex < numBlocksRequired; ++blockIndex) {
+        uint8_t writeBuffer[blockSize];
+        int startIndex = blockIndex * blockSize;
+        int endIndex = min(startIndex + blockSize, dataLength);
+        int length = endIndex - startIndex;
+
+        for (int i = 0; i < blockSize; ++i) {
+          writeBuffer[i] = (i < length) ? inputData[startIndex + i] : 0x00;  // Pad with zeros if input is shorter than block size
+        }
+
+        rc = nfc.writeSingleBlock(uid, blockIndex, writeBuffer, blockSize);
+        if (ISO15693_EC_OK != rc) {
+          Serial.print(F("Error in writeSingleBlock "));
+          Serial.print(blockIndex);
+          Serial.print(F(": "));
+          Serial.println(nfc.strerror(rc));
+          return;
+        }
+
+        Serial.print(F("Data written to block #"));
+        Serial.print(blockIndex);
+        Serial.println(F(" successfully."));
+      }
+
+      for (int blockIndex = 0; blockIndex < numBlocksRequired; ++blockIndex) {
+        uint8_t readBuffer[blockSize];
+        rc = nfc.readSingleBlock(uid, blockIndex, readBuffer, blockSize);
+        if (ISO15693_EC_OK == rc) {
+          Serial.print(F("Data in block #"));
+          Serial.print(blockIndex);
+          Serial.print(F(": "));
+          for (int i = 0; i < blockSize; i++) {
+            Serial.print((char)readBuffer[i]);
+          }
+          Serial.println();
+        } else {
+          Serial.print(F("Error in readSingleBlock "));
+          Serial.print(blockIndex);
+          Serial.print(F(": "));
+          Serial.println(nfc.strerror(rc));
+        }
+      }
+
+      // Clear the UID after the operation
+      memset(uid, 0, sizeof(uid));
+      Serial.println(F("UID cleared after successful operation."));
     }
+    else{
+      Serial.println(F("Operation stopped. Awaiting new command."));
+      command = ""; 
+      break;
+    }
+
+    delay(2000);
   }
 }
